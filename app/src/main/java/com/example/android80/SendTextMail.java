@@ -15,6 +15,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * 发送邮件
+ */
 public class SendTextMail extends Thread{
     private String title;
     private String msuggestions;

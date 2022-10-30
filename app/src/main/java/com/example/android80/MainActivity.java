@@ -4,6 +4,8 @@ package com.example.android80;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.android80.SendHttp.sendRequest;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loginBody.put("password", "SzSz2003..");
             try {
                 JSONObject jsonObject = sendRequest("http://192.168.196.96:5000/login", loginBody);
-                System.out.println(jsonObject.get("UID"));
+                System.out.println(jsonObject);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -94,14 +96,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             JSONObject loginBody = new JSONObject();
-            loginBody.put("jsondata", "{ \\\"query_elec_roominfo\\\": { \\\"aid\\\":\\\"0030000000002501\\\", \\\"account\\\": \\\"30483\\\",\\\"room\\\": { \\\"roomid\\\": \\\"201\\\", \\\"room\\\": \\\"201\\\" },  \\\"floor\\\": { \\\"floorid\\\": \\\"\\\", \\\"floor\\\": \\\"\\\" }, \\\"area\\\": { \\\"area\\\": \\\"嘉应学院\\\", \\\"areaname\\\": \\\"嘉应学院\\\" }, \\\"building\\\": { \\\"buildingid\\\": \\\"9318\\\", \\\"building\\\": \\\"中4A栋\\\" },\\\"extdata\\\":\\\"info1=\\\" } }");
+            loginBody.put("jsondata", "{ \"query_elec_roominfo\": { \"aid\":\"0030000000002501\", \"account\": \"30483\",\"room\": { \"roomid\": \"201\", \"room\": \"201\" },  \"floor\": { \"floorid\": \"\", \"floor\": \"\" }, \"area\": { \"area\": \"嘉应学院\", \"areaname\": \"嘉应学院\" }, \"building\": { \"buildingid\": \"9318\", \"building\": \"中4A栋\" },\"extdata\":\"info1=\" } }");
             loginBody.put("funname", "synjones.onecard.query.elec.roominfo");
             loginBody.put("json", "true");
             try {
-                JSONObject jsonObject = sendRequest("http://ecard.jyu.edu.cn:8988/web/Common/Tsm.html", loginBody);
-                System.out.println(jsonObject.get("UID"));
-            } catch (IOException e) {
-                e.printStackTrace();
+                JSONObject jsonObject = sendRequest("http://ecard.jyu.edu.cn:8988/web/Common/Tsm.html", "jsondata=%7B+%22query_elec_roominfo%22%3A+%7B+%22aid%22%3A%220030000000002501%22%2C+%22account%22%3A+%2230483%22%2C%22room%22%3A+%7B+%22roomid%22%3A+%22201%22%2C+%22room%22%3A+%22201%22+%7D%2C++%22floor%22%3A+%7B+%22floorid%22%3A+%22%22%2C+%22floor%22%3A+%22%22+%7D%2C+%22area%22%3A+%7B+%22area%22%3A+%22%E5%98%89%E5%BA%94%E5%AD%A6%E9%99%A2%22%2C+%22areaname%22%3A+%22%E5%98%89%E5%BA%94%E5%AD%A6%E9%99%A2%22+%7D%2C+%22building%22%3A+%7B+%22buildingid%22%3A+%229318%22%2C+%22building%22%3A+%22%E4%B8%AD4A%E6%A0%8B%22+%7D%2C%22extdata%22%3A%22info1%3D%22+%7D+%7D&funname=synjones.onecard.query.elec.roominfo&json=true");
+                JSONObject jsonObject2 = jsonObject.getJSONObject("query_elec_roominfo");
+                System.out.println(jsonObject2.get("errmsg"));
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
     };
@@ -116,41 +119,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
-
-    public static JSONObject sendRequest(String urlParam, JSONObject b) throws IOException {
-        try {
-            //        params.setUseJsonStreamer(true);
-            JSONObject body = b;
-            URL url = new URL(urlParam);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(5000);
-            // 设置允许输出
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setRequestMethod("POST");
-            // 设置contentType
-            conn.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream os = new DataOutputStream( conn.getOutputStream());
-            String content = String.valueOf(body);
-            os.writeBytes(content);
-            os.flush();
-            os.close();
-            if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                InputStreamReader in = new InputStreamReader(conn.getInputStream());
-                BufferedReader bf = new BufferedReader(in);
-                String recieveData = null;
-                String result = "";
-                while ((recieveData = bf.readLine()) != null){
-                    result += recieveData + "\n";
-                }
-                JSONObject jsonObject =  JSON.parseObject(result);
-                in.close();
-                conn.disconnect();
-                return jsonObject;
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-        return null;
-    }
 }
