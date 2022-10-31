@@ -11,9 +11,16 @@ android {
         minSdk 26
         targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    // 自定义打包名称
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "qingxun.apk"
+        }
     }
 
     buildTypes {
@@ -26,6 +33,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/NOTICE.md'
+    }
 }
 
 dependencies {
@@ -36,10 +47,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson 邮件发送
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.12'
-    implementation 'com.sun.mail:android-mail:1.5.5'
-    implementation 'com.sun.mail:android-activation:1.5.5'
+    implementation 'com.sun.mail:android-mail:1.6.7'
+    implementation 'com.sun.mail:android-activation:1.6.7'
     //jdbc
     implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
     implementation 'androidx.appcompat:appcompat:1.2.0'

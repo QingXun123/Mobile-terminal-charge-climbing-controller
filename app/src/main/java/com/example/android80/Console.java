@@ -4,6 +4,7 @@ import static com.example.android80.SendHttp.sendRequest;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -97,16 +98,14 @@ public class Console extends AppCompatActivity implements View.OnClickListener {
         }
     };
 
-
-
-    Runnable test = new Runnable(){
-        @Override
-        public void run() {
-            try {
-                Connection con = MySQLConnections.getConnection();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
+//    Runnable test = new Runnable(){
+//        @Override
+//        public void run() {
+//            try {
+//                Connection con = MySQLConnections.getConnection();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    };
 }
