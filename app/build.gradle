@@ -11,7 +11,7 @@ android {
         minSdk 26
         targetSdk 32
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -19,7 +19,7 @@ android {
     // 自定义打包名称
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "qingxun.apk"
+            outputFileName = "qingxun" + versionName + ".apk"
         }
     }
 

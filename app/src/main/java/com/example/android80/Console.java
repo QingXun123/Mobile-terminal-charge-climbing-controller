@@ -73,8 +73,8 @@ public class Console extends AppCompatActivity implements View.OnClickListener {
                     }
                 }
                 if (num < 10) {
-                    new Thread(new SendTextMail("947338658@qq.com", "宿舍剩余电量：" + electricity.value, "")).start();
-                    Toast.makeText(getApplicationContext(), "发送成功！", Toast.LENGTH_SHORT).show();
+//                    new Thread(new SendTextMail("947338658@qq.com", "宿舍剩余电量：" + electricity.value, "")).start();
+                    Toast.makeText(getApplicationContext(), "剩余电量：" + electricity.value, Toast.LENGTH_SHORT).show();
                 } else {
                     //显示Toast信息
                     Toast.makeText(getApplicationContext(), "爬取失败！", Toast.LENGTH_SHORT).show();
