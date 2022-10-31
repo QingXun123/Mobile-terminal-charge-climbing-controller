@@ -72,9 +72,11 @@ public class Master extends AppCompatActivity implements View.OnClickListener {
                 // 准备sql语句
                 // 注意： 字符串要用单引号'
                 //在statement中使用字符串拼接的方式，这种方式存在诸多问题
-                String sql = "select * from student where email = " + editTextTextEmailAddress.getText();
+                String sql = "select * from student where email =\'" + editTextTextEmailAddress.getText() + "\';";
                 ResultSet rs = s.executeQuery(sql);
+                Boolean flag = true;
                 while (rs.next()) {
+                    flag = false;
                     if (rs.getString("email").equals(String.valueOf(editTextTextEmailAddress.getText()))) {
                         if (rs.getString("password").equals(String.valueOf(editTextTextPassword.getText()))) {
                             db = myDBOpenHelper.getWritableDatabase();
@@ -90,12 +92,13 @@ public class Master extends AppCompatActivity implements View.OnClickListener {
                             text = "密码错误！";
                             Toast.makeText(getApplicationContext(), "密码错误！", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        text = "账号不存在！";
-                        Toast.makeText(getApplicationContext(), "账号不存在！", Toast.LENGTH_SHORT).show();
                     }
                     System.out.println(rs.getString("email"));
                     System.out.println(rs.getString("password"));
+                }
+                if (flag) {
+                    text = "账号不存在！";
+                    Toast.makeText(getApplicationContext(), "账号不存在！", Toast.LENGTH_SHORT).show();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.example.android80;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button loginBtn;
     private Button masterBtn;
-    private EditText editTextNumber;
+    private EditText editTextPhone;
     private EditText editTextTextPassword;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loginBtn = findViewById(R.id.loginBtn);
         masterBtn = findViewById(R.id.masterBtn);
+        editTextPhone = findViewById(R.id.editTextPhone);
         editTextTextPassword = findViewById(R.id.editTextTextPassword);
 
         loginBtn.setOnClickListener(this);
